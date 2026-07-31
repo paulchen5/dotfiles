@@ -7,7 +7,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, ... }:
   let
     configuration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
@@ -35,19 +35,23 @@
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
     };
+
+    modules = [
+      configuration
+      ./pkgs/default.nix
+      ./pkgs/desktop/macos/systemPackages.nix
+      ./pkgs/desktop/systemPackages.nix
+      ./macos-defaults.nix
+      ./shells/zsh.nix
+    ];
   in
   {
+    darwinModules.default = modules;
+
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."simple" = nix-darwin.lib.darwinSystem {
-      modules = [
-        configuration
-        ./pkgs/default.nix
-        ./pkgs/desktop/macos/systemPackages.nix
-        ./pkgs/desktop/systemPackages.nix
-        ./macos-defaults.nix
-        ./shells/zsh.nix
-      ];
+      inherit modules;
     };
   };
 }

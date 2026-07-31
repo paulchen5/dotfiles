@@ -10,4 +10,8 @@
     pkgs.rectangle
     pkgs.scroll-reverser
   ];
+
+  environment.etc."gnupg/gpg-agent.conf".text = ''
+    pinentry-program ${pkgs.pinentry_mac}/bin/pinentry-mac
+  '';
 }

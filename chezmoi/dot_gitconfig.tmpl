@@ -1,0 +1,44 @@
+[user]
+	email = lukas.23022005@gmail.com
+	name = Paulchen
+[init]
+	defaultBranch = main
+[core]
+	editor = code --wait
+	autocrlf = input
+[pager]
+	branch = false
+
+[credential]
+{{- if eq .chezmoi.os "darwin" }}
+	helper = osxkeychain
+{{- else if eq .chezmoi.os "linux" }}
+	helper = libsecret
+{{- end }}
+
+{{- if .work.enabled }}
+{{- range .work.enterpriseUrls }}
+[includeIf "hasconfig:remote.*.url:{{ . }}/**"]
+	path = ~/.gitconfig.sap
+{{ end -}}
+{{- end }}
+
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+	path = ~/.gitconfig.personal
+{{ if .work.enabled }}
+{{- range .work.orgUrls }}
+[includeIf "hasconfig:remote.*.url:{{ . }}/**"]
+	path = ~/.gitconfig.sap
+{{ end -}}
+{{- end }}
+
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+[pull]
+	rebase = true
+[gpg]
+	program = {{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/gpg{{ else }}/run/current-system/sw/bin/gpg{{ end }}
+[push]
+	autoSetupRemote = true

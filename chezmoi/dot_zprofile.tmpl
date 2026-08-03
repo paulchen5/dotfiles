@@ -1,0 +1,48 @@
+ {{- if eq .packageManager.name "brew" }}
+# Setting PATH for Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+{{- end }}
+
+# Language settings
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+ {{- if eq .packageManager.name "brew" }}
+# Oh My Zsh configuration
+export ZSH="$HOME/.oh-my-zsh"
+{{- end }}
+
+# gpg settings
+export GPG_TTY=$(tty)
+
+# LaTeX settings # TODO check whether needed?
+# export PATH="/usr/local/texlive/2024/bin/universal-darwin/:$PATH"
+
+# pipx installations # TODO check whether needed? Replacement with uv?
+# export PATH="$HOME/.local/bin:$PATH"
+
+# Go settings
+export GO_PATH="$HOME/go"
+export PATH="$PATH:$GO_PATH/bin"
+
+# Python pyenv configuration
+# export PATH="$HOME/.pyenv/bin:$PATH"
+# eval "$(pyenv init --path)"
+# eval "$(pyenv init -)"
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='code --wait' # TODO use nvim
+fi
+
+export XDG_CONFIG_HOME="${HOME}/.config"
+
+# telemetry / tracking settings
+export DO_NOT_TRACK=true
+export GH_TELEMETRY=false
+ {{- if eq .packageManager.name "brew" }}
+export HOMEBREW_NO_ANALYTICS=1
+{{- end }}
+export OPENSPEC_TELEMETRY=0

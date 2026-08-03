@@ -1,0 +1,13 @@
+{
+    "auths": {},
+    "credsStore": "osxkeychain",
+    "currentContext": "colima",
+{{- if eq .packageManager.name "brew" }}
+    "cliPluginsExtraDirs": [
+        "/opt/homebrew/lib/docker/cli-plugins"
+    ],
+{{- end }}
+    "aliases": {
+        "builder": "buildx"
+    }
+}

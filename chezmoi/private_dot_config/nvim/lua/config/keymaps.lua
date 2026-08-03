@@ -1,0 +1,10 @@
+vim.keymap.set('n', '<A-BS>', 'a<C-W><esc>')
+vim.keymap.set('n', '<A-Del>', 'de')
+vim.keymap.set('n', '<A-left>', 'b')
+vim.keymap.set('n', '<A-right>', 'w')
+vim.keymap.set('n', '<A-up>', '^')
+vim.keymap.set('n', '<A-down>', '$')
+
+vim.keymap.set('c', '<M-b>', '<C-Left>')
+vim.keymap.set('c', '<M-f>', '<C-Right>')
+vim.keymap.set('c', '<M-BS>', '<C-w>')

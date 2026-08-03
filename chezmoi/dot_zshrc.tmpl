@@ -1,0 +1,187 @@
+# zmodload zsh/zprof
+
+{{- if eq .packageManager.name "brew" }}
+# activate zinit
+source "$(brew --prefix)/opt/zinit/zinit.zsh"
+{{- end }}
+
+
+# ==============================================================================
+# Begin Welcome screen
+# ==============================================================================
+#
+# print octocat
+fastfetch --logo "$(gh api https://api.github.com/octocat)" \
+    --logo-type data --logo-padding-top 3
+#
+# ==============================================================================
+# End Welcome screen
+# ==============================================================================
+
+{{- if eq .packageManager.name "brew" }}
+source ${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ${HOMEBREW_PREFIX}/share/powerlevel10k/powerlevel10k.zsh-theme
+{{- end }}
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+{{- if eq .packageManager.name "brew" }}
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+{{- end }}
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME=""
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+    macos
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Compilation flags
+# export ARCHFLAGS="-arch $(uname -m)"
+
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# compinit for shell completion
+# -C skips the security check
+autoload -Uz compinit && compinit -C
+
+# fix long shell loading time
+{
+  # Compile zcompdump in the background
+  zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+  if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+    zcompile "$zcompdump"
+  fi
+} &!
+
+_load_cds_completion() {
+    # cds completion start
+    CDS_PROFILE=$(cds completion --shell zsh --profile 2> /dev/null) || CDS_PROFILE=""
+    if [ -r "$CDS_PROFILE" ]; then
+        . "$CDS_PROFILE"
+    fi
+    # cds completion end
+}
+
+{{- if eq .packageManager.name "brew" }}
+# NVM setup
+export NVM_DIR="$HOME/.nvm"
+
+case $- in
+  *i*)
+    [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \
+      zinit ice wait'0' lucid atload'_load_cds_completion' && \
+      zinit snippet "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+    [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \
+      zinit ice wait'0' lucid && \
+      zinit snippet "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+  ;;       # interactive
+  *)
+    [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] &&
+        \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+        load_cds_completion
+    [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] &&
+        \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+  ;;  # non-interactive
+esac
+{{- end }}
+
+zinit ice wait'0' lucid
+{{- if eq .packageManager.name "brew" }}
+zinit snippet OMZP::nvm/nvm.plugin.zsh
+{{- end }}
+zinit snippet OMZP::git/git.plugin.zsh
+zinit snippet OMZP::gh/gh.plugin.zsh
+zinit snippet OMZP::bgnotify/bgnotify.plugin.zsh
+zinit snippet OMZP::cloudfoundry/cloudfoundry.plugin.zsh
+zinit snippet OMZP::uv/uv.plugin.zsh
+zinit snippet OMZP::docker/docker.plugin.zsh
+zinit snippet OMZP::docker-compose/docker-compose.plugin.zsh
+zinit snippet OMZP::kubectl/kubectl.plugin.zsh
+
+alias pexp='poetry export -f requirements.txt --output requirements.txt'
+
+# custom kubectl priorication (for u8s for example)
+# export PATH="/usr/local/bin:$PATH"
+
+{{- if eq .packageManager.name "brew" }}
+function ku() {
+    /opt/homebrew/bin/kubectl "$@"
+}
+{{- end }}
+
+# gitignore gi command from https://docs.gitignore.io/
+function gi() {
+    curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;
+}
+
+function hide() {
+    clear
+    printf '\e[3J'
+}
+
+function generate-password() {
+    python3 -c "import secrets; print(secrets.token_urlsafe(32))"
+}
+
+function iterm() {
+    open "$1" -a iTerm
+}
+
+function lock() {
+    ghostty --fullscreen=true --gtk-single-instance=false \
+        --background-image-opacity=2 \
+        -e zsh -c "ghostty +boo"
+}
+
+function present() {
+    ghostty --config-file="$XDG_CONFIG_HOME/ghostty/config.presentation"
+}
+
+setopt PROMPT_SUBST # p10k
+
+alias klaus=claude
+
+export PATH
+
+# start command
+# source $HOME/.config/tmux/tmux/iterm_startup.sh
+
+# zprof

@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+command -v code >/dev/null || exit 0
+
+{{ range (include "../vscode/extensions" | splitList "\n") -}}
+{{ if . }}code --install-extension {{ . | quote }}
+{{ end -}}
+{{ end -}}
+
+( cd $(nix run nixpkgs#chezmoi -- source-path) && nix run nixpkgs#git -- update-index --assume-unchanged chezmoi/.chezmoidata.toml )

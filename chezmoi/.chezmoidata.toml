@@ -1,0 +1,6 @@
+[work]
+  enabled = false
+  enterpriseUrls = []
+  orgUrls = []
+[packageManager]
+  name = "nix" # valid values are "brew" and "nix"

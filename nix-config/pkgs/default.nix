@@ -30,9 +30,11 @@
     pkgs.kubectl
     pkgs.neovim
     pkgs.nmap
+    pkgs.nodejs_24
     pkgs.opencode
     pkgs.openspec
-    pkgs.pyenv
+    # pkgs.pyenv
+    pkgs.python314
     pkgs.ripgrep # required by telescope.nvim; see: https://github.com/nvim-telescope/telescope.nvim#recommended-dependencies
     pkgs.shellcheck
     pkgs.tmux

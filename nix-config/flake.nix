@@ -38,10 +38,10 @@
 
     modules = [
       configuration
+      ./config/darwin.nix
       ./pkgs/default.nix
       ./pkgs/desktop/macos/systemPackages.nix
       ./pkgs/desktop/systemPackages.nix
-      ./macos-defaults.nix
       ./shells/zsh.nix
     ];
   in

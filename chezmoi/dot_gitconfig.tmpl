@@ -39,6 +39,6 @@
 [pull]
 	rebase = true
 [gpg]
-	program = {{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/gpg{{ else }}/run/current-system/sw/bin/gpg{{ end }}
+	program = {{- if eq .packageManager.name "brew" }}/opt/homebrew/bin/gpg{{ else }}/run/current-system/sw/bin/gpg{{ end }}
 [push]
 	autoSetupRemote = true

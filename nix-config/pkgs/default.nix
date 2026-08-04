@@ -10,6 +10,7 @@
     pkgs.awscli
     pkgs.bash
     pkgs.buf
+    pkgs.chezmoi
     pkgs.claude-code
     pkgs.cloudfoundry-cli # work
     pkgs.docker

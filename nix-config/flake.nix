@@ -22,6 +22,9 @@
       # Enable alternative shell support in nix-darwin.
       # programs.fish.enable = true;
 
+      programs.direnv.enable = true;
+      programs.direnv.enableZshIntegration = true;
+
       # Set Git commit hash for darwin-version.
       system.configurationRevision = self.rev or self.dirtyRev or null;
 

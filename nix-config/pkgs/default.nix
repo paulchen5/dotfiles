@@ -13,6 +13,7 @@
     pkgs.chezmoi
     pkgs.claude-code
     pkgs.cloudfoundry-cli # work
+    pkgs.direnv
     pkgs.docker
     pkgs.docker-buildx
     pkgs.docker-compose
@@ -30,6 +31,7 @@
     pkgs.kind
     pkgs.kubectl
     pkgs.neovim
+    pkgs.nix-direnv
     pkgs.nmap
     pkgs.nodejs_24
     pkgs.opencode

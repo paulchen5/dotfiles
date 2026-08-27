@@ -10,7 +10,7 @@
   environment.systemPackages = with pkgs; [
     bruno
     drawio
-    gimp
+    gimp2
     vscode
   ];
 

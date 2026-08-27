@@ -1,0 +1,14 @@
+# Git blame ignore revs
+# This file contains commit hashes that should be ignored by git blame
+# See: https://git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-filefile
+# The format of the .git-blame-ignore-revs follows the same format as an fsck.skipList
+# See: https://git-scm.com/docs/git-fsck#Documentation/git-fsck.txt-fsckskipList
+
+# Move nix-config/macos-defaults.nix to nix-config/config/darwin.nix
+27c17a6fcfdd93038172c6a9f1eaf4d42cd4afc3
+
+# Move chezmoi/run_once_setup.sh.tmpl to chezmoi/.chezmoiscripts/run_once_setup.sh.tmpl
+7c425d7d3f7be5584b2f148c19e984f6e74de763
+
+# Format all ./**/*.nix files using nixfmt-tree
+48d3fd37f9e9cfd096f1d1704d0516b7849d4655

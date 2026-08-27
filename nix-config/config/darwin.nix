@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   system.defaults = {
@@ -7,8 +7,9 @@
       KeyRepeat = 5;
       InitialKeyRepeat = 15;
       AppleKeyboardUIMode = 0;
-      # AppleReduceDesktopTinting = true; # TODO needs PR
+      AppleReduceDesktopTinting = true; # Whether to tint the current window background with the color of the system wallpaper.
       "com.apple.swipescrolldirection" = true;  # natural scrolling
+      AppleShowAllExtensions = true;  # Whether to show all file extensions in Finder.
     };
 
     dock = {
@@ -24,6 +25,10 @@
       expose-group-apps = false;
       # Feste Dock-Icons (Reihenfolge wie auf der Quelle)
       persistent-apps = [];
+      wvous-bl-corner = 1;
+      wvous-br-corner = 1;
+      wvous-tl-corner = 1;
+      wvous-tr-corner = 1;
     };
 
     finder = {
@@ -63,4 +68,8 @@
   };
 
   system.startup.chime = false;
+
+  fonts.packages = with pkgs; [
+    meslo-lgs-nf
+  ];
 }

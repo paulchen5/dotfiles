@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-# TODO research code-cli
+{ lib, pkgs, ... }:
 
 {
   nixpkgs.config.allowUnfreePredicate = pkg:

@@ -7,55 +7,61 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, ... }:
-  let
-    configuration = { pkgs, ... }: {
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      # environment.systemPackages =
-      #   [ pkgs.vim
-      #   ];
+  outputs =
+    inputs@{
+      self,
+      nix-darwin,
+      nixpkgs,
+      ...
+    }:
+    let
+      configuration = { pkgs, ... }: {
+        # List packages installed in system profile. To search by name, run:
+        # $ nix-env -qaP | grep wget
+        # environment.systemPackages =
+        #   [ pkgs.vim
+        #   ];
 
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
+        # Necessary for using flakes on this system.
+        nix.settings.experimental-features = "nix-command flakes";
 
-      # Enable alternative shell support in nix-darwin.
-      # programs.fish.enable = true;
+        # Enable alternative shell support in nix-darwin.
+        # programs.fish.enable = true;
 
-      programs.direnv.enable = true;
-      programs.direnv.enableZshIntegration = true;
+        programs.direnv.enable = true;
+        programs.direnv.enableZshIntegration = true;
 
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
+        # Set Git commit hash for darwin-version.
+        system.configurationRevision = self.rev or self.dirtyRev or null;
 
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 6;
+        # Used for backwards compatibility, please read the changelog before changing.
+        # $ darwin-rebuild changelog
+        system.stateVersion = 6;
 
-      # Unlocking sudo via fingerprint
-      security.pam.services.sudo_local.touchIdAuth = true;
+        # Unlocking sudo via fingerprint
+        security.pam.services.sudo_local.touchIdAuth = true;
 
-      # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
+        # The platform the configuration will be used on.
+        nixpkgs.hostPlatform = "aarch64-darwin";
+      };
+
+      modules = [
+        configuration
+        ./config/darwin.nix
+        ./pkgs/default.nix
+        ./pkgs/unfree.nix
+        ./pkgs/desktop/macos/systemPackages.nix
+        ./pkgs/desktop/systemPackages.nix
+        ./shells/zsh.nix
+      ];
+    in
+    {
+      darwinModules.default = modules;
+
+      # Build darwin flake using:
+      # $ darwin-rebuild build --flake .#simple
+      darwinConfigurations."simple" = nix-darwin.lib.darwinSystem {
+        inherit modules;
+      };
     };
-
-    modules = [
-      configuration
-      ./config/darwin.nix
-      ./pkgs/default.nix
-      ./pkgs/unfree.nix
-      ./pkgs/desktop/macos/systemPackages.nix
-      ./pkgs/desktop/systemPackages.nix
-      ./shells/zsh.nix
-    ];
-  in
-  {
-    darwinModules.default = modules;
-
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations."simple" = nix-darwin.lib.darwinSystem {
-      inherit modules;
-    };
-  };
 }

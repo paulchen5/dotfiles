@@ -8,8 +8,8 @@
       InitialKeyRepeat = 15;
       AppleKeyboardUIMode = 0;
       AppleReduceDesktopTinting = true; # Whether to tint the current window background with the color of the system wallpaper.
-      "com.apple.swipescrolldirection" = true;  # natural scrolling
-      AppleShowAllExtensions = true;  # Whether to show all file extensions in Finder.
+      "com.apple.swipescrolldirection" = true; # natural scrolling
+      AppleShowAllExtensions = true; # Whether to show all file extensions in Finder.
     };
 
     dock = {
@@ -24,7 +24,7 @@
       show-process-indicators = false;
       expose-group-apps = false;
       # Feste Dock-Icons (Reihenfolge wie auf der Quelle)
-      persistent-apps = [];
+      persistent-apps = [ ];
       wvous-bl-corner = 1;
       wvous-br-corner = 1;
       wvous-tl-corner = 1;
@@ -32,7 +32,7 @@
     };
 
     finder = {
-      CreateDesktop = false;      # Desktop-Icons ausblenden
+      CreateDesktop = false; # Desktop-Icons ausblenden
     };
 
     WindowManager = {
@@ -46,12 +46,12 @@
     # };
 
     trackpad = {
-      Clicking = true;                    # Tap-to-Click
-      Dragging = true;                    # Tap-and-Drag
-      TrackpadThreeFingerTapGesture = 2;  # Drei-Finger-Tipp (Nachschlagen)
-      ActuateDetents = false;             # keine haptischen Detents
-      ForceSuppressed = true;             # Force Touch unterdrückt
-      FirstClickThreshold = 0;            # leichter Klickdruck
+      Clicking = true; # Tap-to-Click
+      Dragging = true; # Tap-and-Drag
+      TrackpadThreeFingerTapGesture = 2; # Drei-Finger-Tipp (Nachschlagen)
+      ActuateDetents = false; # keine haptischen Detents
+      ForceSuppressed = true; # Force Touch unterdrückt
+      FirstClickThreshold = 0; # leichter Klickdruck
       SecondClickThreshold = 0;
     };
 

@@ -1,11 +1,10 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "code"
-      "vscode"
-    ];
+  unfreePackages = [
+    "code"
+    "vscode"
+  ];
 
   environment.systemPackages = with pkgs; [
     bruno

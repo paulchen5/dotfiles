@@ -1,10 +1,9 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "claude-code"
-    ];
+  unfreePackages = [
+    "claude-code"
+  ];
 
   environment.systemPackages = [
     pkgs.act

@@ -43,6 +43,7 @@
       configuration
       ./config/darwin.nix
       ./pkgs/default.nix
+      ./pkgs/unfree.nix
       ./pkgs/desktop/macos/systemPackages.nix
       ./pkgs/desktop/systemPackages.nix
       ./shells/zsh.nix

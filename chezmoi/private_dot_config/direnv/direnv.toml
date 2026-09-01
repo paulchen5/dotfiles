@@ -1,0 +1,1 @@
+hide_env_diff = true # hides the printed changes of environment variables when loading an .envrc file

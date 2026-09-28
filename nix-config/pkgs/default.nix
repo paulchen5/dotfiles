@@ -32,7 +32,6 @@
     pkgs.htop
     pkgs.kind
     pkgs.kubectl
-    pkgs.neovim
     pkgs.nix-direnv
     pkgs.nmap
     pkgs.nodejs_24

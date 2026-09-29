@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  imports = [ ./editor ];
+
   unfreePackages = [
     "claude-code"
   ];
@@ -25,8 +27,6 @@
     pkgs.gh
     pkgs.git
     pkgs.gnupg
-    pkgs.go
-    pkgs.golangci-lint
     pkgs.gopls
     pkgs.hadolint
     pkgs.htop

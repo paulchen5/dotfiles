@@ -52,7 +52,6 @@
         ./pkgs/unfree.nix
         ./pkgs/desktop/macos/systemPackages.nix
         ./pkgs/desktop/systemPackages.nix
-        ./pkgs/editor.nix
         ./shells/zsh.nix
       ];
     in

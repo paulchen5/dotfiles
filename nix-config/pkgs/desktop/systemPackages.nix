@@ -3,6 +3,7 @@
 {
   unfreePackages = [
     "code"
+    "obsidian"
     "vscode"
   ];
 

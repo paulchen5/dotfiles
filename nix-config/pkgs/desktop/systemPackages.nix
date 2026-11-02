@@ -9,6 +9,7 @@
   environment.systemPackages = with pkgs; [
     bruno
     drawio
+    obsidian
     vscode
   ];
 
